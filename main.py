@@ -8,7 +8,7 @@ import random
 
 @dp.message_handler(commands=['start'])
 async def start_command(message: types.Message):
-    await message.answer(f'Hello {message.from_user.full_name}!')
+    await message.answer(f'Hello {message.from_user.full_name}!!!!')
 
 @dp.message_handler(commands=['mem'])
 async def mem_command(message: types.message):
