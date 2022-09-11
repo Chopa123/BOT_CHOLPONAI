@@ -3,6 +3,7 @@ from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 from aiogram.utils import executor
 from config import bot, dp
 import logging
+import random
 
 
 @dp.message_handler(commands=['start'])
@@ -11,7 +12,9 @@ async def start_command(message: types.Message):
 
 @dp.message_handler(commands=['mem'])
 async def mem_command(message: types.message):
-
+    images = ["media/meme1.jpg", "media/meme2.jpg", "media/meme3.jpg"]
+    photo = open(random.choice(images), 'rb')
+    await bot.send_photo(message.chat.id, photo=photo)
 
 @dp.message_handler(commands=['quiz'])
 async def quiz_1(message: types.message):
@@ -21,9 +24,9 @@ async def quiz_1(message: types.message):
 
     question = "Cколько весит самая крупная жемчужина в мире?"
     answers = [
-        "60 килограмм"
-        "47 килограмм"
-        "21 килограмм"
+        "60 килограмм",
+        "47 килограмм",
+        "21 килограмм",
         "34 килограмм"
     ]
     await bot.send_poll(
@@ -41,15 +44,12 @@ async def quiz_1(message: types.message):
 
 @dp.callback_query_handler(lambda call: call.data == "button_call_1")
 async def quiz_2(call: types.callback_query):
-    markup = InlineKeyboardMarkup()
-    button_call_2 = InlineKeyboardButton("Next", callback_data="button_call_1")
-    markup.add(button_call_2)
 
     question = "Сколько человек каждый день становятся миллионерами?"
     answers = [
-        "2000"
-        "1750"
-        "2500"
+        "2000",
+        "1750",
+        "2500",
         "2090"
     ]
     await bot.send_poll(
@@ -67,10 +67,7 @@ async def quiz_2(call: types.callback_query):
 @dp.message_handler()
 async def echo(message: types.Message):
     if message.text.isnumeric():
-        if len(message.text) > 3:
-            await message.answer('я не хочу умножать')
-        else:
-            await message.answer(int(message.text) ** 2)
+        await message.answer(int(message.text) ** 2)
     else:
         await bot.send_message(message.from_user.id, message.text)
 
